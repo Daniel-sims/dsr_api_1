@@ -26,9 +26,13 @@ SECRET_KEY = '8w3t1r@%7blo39ws4zkp+wx%zqqel1sl%1+^-q98!8uwir0*f2'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
 
 
 # Application definition
+
+AUTH_USER_MODEL = "users.User"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,6 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+
+    'users.apps.UsersConfig',
+    'groups.apps.GroupsConfig',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +57,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    'users.backends.JWTAuthentication',
+  ),
+}
 
 ROOT_URLCONF = 'dsr_api.urls'
 
@@ -75,8 +91,12 @@ WSGI_APPLICATION = 'dsr_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dsr',
+        'USER': 'daniel',
+        'PASSWORD': 'Moody123',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -118,3 +138,87 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Group fields
+DSR_ADMIN_GROUP_NAME = 'DSR Admin'
+DSR_ADMIN_SLUG_FIELD = 'dsr-admin'
+
+DSR_EMPLOYEE_GROUP_NAME = 'DSR Employee'
+DSR_EMPLOYEE_SLUG_FIELD = 'dsr-employee'
+
+DSR_CUSTOMER_SUPER_ADMIN_GROUP_NAME = 'DSR Customer Super Admin'
+DSR_CUSTOMER_SUPER_ADMIN_SLUG_FIELD = 'dsr-customer-super-admin'
+
+DSR_CUSTOMER_ADMIN_GROUP_NAME = 'DSR Customer Admin'
+DSR_CUSTOMER_ADMIN_SLUG_FIELD = 'dsr-customer-admin'
+
+DSR_CUSTOMER_USER_GROUP_NAME = "DSR Customer User"
+DSR_CUSTOMER_USER_SLUG_FIELD = 'dsr-customer-user'
+
+# Custom permissions
+# User
+# DSR Admin
+CAN_ADD_DSR_ADMIN_NAME = 'Can add DSR Admin'
+CAN_ADD_DSR_ADMIN_PERM = 'can_add_dsr_admin'
+CAN_ADD_DSR_ADMIN_PERM_NAME = 'users.can_add_dsr_admin'
+
+CAN_DELETE_DSR_ADMIN_NAME = 'Can delete DSR Admin'
+CAN_DELETE_DSR_ADMIN_PERM = 'can_delete_dsr_admin'
+CAN_DELETE_DSR_ADMIN_PERM_NAME = 'users.can_delete_dsr_admin'
+
+CAN_UPDATE_DSR_ADMIN_NAME = 'Can update DSR Admin'
+CAN_UPDATE_DSR_ADMIN_PERM = 'can_update_dsr_admin'
+CAN_UPDATE_DSR_ADMIN_PERM_NAME = 'users.can_update_dsr_admin'
+
+# DSR Employee
+CAN_ADD_DSR_EMPLOYEE_NAME = 'Can add DSR Employee'
+CAN_ADD_DSR_EMPLOYEE_PERM = 'can_add_dsr_employee'
+CAN_ADD_DSR_EMPLOYEE_PERM_NAME = 'users.can_add_dsr_employee'
+
+CAN_DELETE_DSR_EMPLOYEE_NAME = 'Can delete DSR Employee'
+CAN_DELETE_DSR_EMPLOYEE_PERM = 'can_delete_dsr_employee'
+CAN_DELETE_DSR_EMPLOYEE_PERM_NAME = 'users.can_delete_dsr_employee'
+
+CAN_UPDATE_DSR_EMPLOYEE_NAME = 'Can update DSR Employee'
+CAN_UPDATE_DSR_EMPLOYEE_PERM = 'can_update_dsr_employee'
+CAN_UPDATE_DSR_EMPLOYEE_PERM_NAME = 'users.can_update_dsr_employee'
+
+# DSR Customer Super Admin
+CAN_ADD_DSR_CUSTOMER_SUPER_ADMIN_NAME = 'Can add DSR Customer Super Admin'
+CAN_ADD_DSR_CUSTOMER_SUPER_ADMIN_PERM = 'can_add_dsr_customer_super_admin'
+CAN_ADD_DSR_CUSTOMER_SUPER_ADMIN_PERM_NAME = 'users.can_add_dsr_customer_super_admin'
+
+CAN_DELETE_DSR_CUSTOMER_SUPER_ADMIN_NAME = 'Can delete DSR Customer Super Admin'
+CAN_DELETE_DSR_CUSTOMER_SUPER_ADMIN_PERM = '.can_delete_dsr_customer_super_admin'
+CAN_DELETE_DSR_CUSTOMER_SUPER_ADMIN_PERM_NAME = 'users.can_delete_dsr_customer_super_admin'
+
+CAN_UPDATE_DSR_CUSTOMER_SUPER_ADMIN_NAME = 'Can update DSR Customer Super Admin'
+CAN_UPDATE_DSR_CUSTOMER_SUPER_ADMIN_PERM = 'can_update_dsr_customer_super_admin'
+CAN_UPDATE_DSR_CUSTOMER_SUPER_ADMIN_PERM_NAME = 'users.can_update_dsr_customer_super_admin'
+
+# DSR Customer Admin
+CAN_ADD_DSR_CUSTOMER_ADMIN_NAME = 'Can add DSR Customer Admin'
+CAN_ADD_DSR_CUSTOMER_ADMIN_PERM = 'can_add_dsr_customer_admin'
+CAN_ADD_DSR_CUSTOMER_ADMIN_PERM_NAME = 'users.can_add_dsr_customer_admin'
+
+CAN_DELETE_DSR_CUSTOMER_ADMIN_NAME = 'Can delete DSR Customer Admin'
+CAN_DELETE_DSR_CUSTOMER_ADMIN_PERM = 'can_delete_dsr_customer_admin'
+CAN_DELETE_DSR_CUSTOMER_ADMIN_PERM_NAME = 'users.can_delete_dsr_customer_admin'
+
+CAN_UPDATE_DSR_CUSTOMER_ADMIN_NAME = 'Can update DSR Customer Admin'
+CAN_UPDATE_DSR_CUSTOMER_ADMIN_PERM = 'can_update_dsr_customer_admin'
+CAN_UPDATE_DSR_CUSTOMER_ADMIN_PERM_NAME = 'users.can_update_dsr_customer_admin'
+
+# DSR Customer User
+CAN_ADD_DSR_CUSTOMER_USER_NAME = 'Can add DSR Customer User'
+CAN_ADD_DSR_CUSTOMER_USER_PERM = 'can_add_dsr_customer_user'
+CAN_ADD_DSR_CUSTOMER_USER_PERM_NAME = 'users.can_add_dsr_customer_user'
+
+CAN_DELETE_DSR_CUSTOMER_USER_NAME = 'Can delete DSR Customer User'
+CAN_DELETE_DSR_CUSTOMER_USER_PERM = 'can_delete_dsr_customer_user'
+CAN_DELETE_DSR_CUSTOMER_USER_PERM_NAME = 'users.can_delete_dsr_customer_user'
+
+CAN_UPDATE_DSR_CUSTOMER_USER_NAME = 'Can update DSR Customer User'
+CAN_UPDATE_DSR_CUSTOMER_USER_PERM = 'can_update_dsr_customer_user'
+CAN_UPDATE_DSR_CUSTOMER_USER_PERM_NAME = 'users.can_update_dsr_customer_user'
