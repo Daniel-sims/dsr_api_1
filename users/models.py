@@ -40,16 +40,23 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_user_with_company(self, username, email, password, first_name=None, last_name=None):
+    def create_user_with_company(self, username, email, password, dsr_group, first_name, last_name, company):
         user = self.model(
             username=username,
             email=self.normalize_email(email),
             first_name=first_name,
             last_name=last_name,
+            company=company
         )
 
-        user.set_password(password)
-        user.save()
+        with transaction.atomic():
+            user.set_password(password)
+            user.save()
+
+            if dsr_group:
+                user.groups.add(dsr_group)
+
+            user.save()
 
         return user
 
@@ -70,6 +77,8 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=64, blank=True, null=True)
 
     last_name = models.CharField(max_length=64, blank=True, null=True)
+
+    company = models.ForeignKey('company.Company', on_delete=models.CASCADE, null=True, blank=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']

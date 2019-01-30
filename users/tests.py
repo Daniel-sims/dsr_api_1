@@ -74,7 +74,7 @@ class CreateUserNoCompanyTestCase(APITestCase):
 
     def _test_create_user_no_company_view_permissions(self, user, data, expected_status_code, response_keys=None):
         self.client.force_authenticate(user=user)
-        response = self.client.post(reverse('create-users-no-company'), data, format='json')
+        response = self.client.post(reverse('list-create-users-no-company'), data, format='json')
 
         self.assertEqual(response.status_code, expected_status_code, response.content)
 

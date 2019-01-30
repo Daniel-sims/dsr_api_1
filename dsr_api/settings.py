@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'groups.apps.GroupsConfig',
+    'company.apps.CompanyConfig',
 ]
 
 MIDDLEWARE = [
@@ -222,3 +223,9 @@ CAN_DELETE_DSR_CUSTOMER_USER_PERM_NAME = 'users.can_delete_dsr_customer_user'
 CAN_UPDATE_DSR_CUSTOMER_USER_NAME = 'Can update DSR Customer User'
 CAN_UPDATE_DSR_CUSTOMER_USER_PERM = 'can_update_dsr_customer_user'
 CAN_UPDATE_DSR_CUSTOMER_USER_PERM_NAME = 'users.can_update_dsr_customer_user'
+
+# Company
+CAN_ADD_COMPANY_PERM_NAME = 'company.add_company'
+CAN_CHANGE_COMPANY_PERM_NAME = 'company.change_company'
+CAN_VIEW_COMPANY_PERM_NAME = 'company.view_company'
+CAN_DELETE_COMPANY_PERM_NAME = 'company.delete_company'
