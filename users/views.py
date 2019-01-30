@@ -8,7 +8,7 @@ from users.permissions import UserPermissionsNoCompany
 from users.serializers import LoginSerializer, UserSerializer, CompanyUserSerializer
 
 
-class CreateUserNoCompanyAPIView(ListCreateAPIView):
+class ListCreateUserNoCompanyAPIView(ListCreateAPIView):
     """
     Creates a new User Account.
 
@@ -36,7 +36,7 @@ class CreateUserNoCompanyAPIView(ListCreateAPIView):
     serializer_class = UserSerializer
 
 
-class CreateUserWithCompanyAPIView(ListCreateAPIView):
+class ListCreateUserWithCompanyAPIView(ListCreateAPIView):
     """
     Creates a new User Account for a company.
 
